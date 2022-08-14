@@ -14,7 +14,7 @@ class Game:
 
         # Window Config
         pg.display.set_caption("Stonenorlia")
-        gicon = pg.image.load('Resources/cave_icon.png')
+        gicon = pg.image.load('window/cave_icon.png')
         pg.display.set_icon(gicon)
         
     def run(self):
