@@ -7,7 +7,7 @@ class Player(pg.sprite.Sprite):
 	def __init__(self,pos,groups,obstacle_sprites,create_attack,destroy_weapon):
 		super().__init__(groups)
 		
-		img1 = pg.image.load('player/right/right_0.png')
+		img1 = pg.image.load('player/right/right0.png')
 		img2 = pg.transform.scale(img1,(64,64))
 		self.image = img2.convert_alpha()
 		self.rect = self.image.get_rect(topleft = pos)

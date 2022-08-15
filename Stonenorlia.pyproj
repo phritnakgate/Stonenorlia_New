@@ -34,6 +34,9 @@
     <Compile Include="player.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="seller.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="settings.py">
       <SubType>Code</SubType>
     </Compile>
