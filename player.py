@@ -4,7 +4,7 @@ from support import *
 
 
 class Player(pg.sprite.Sprite):
-	def __init__(self,pos,groups,obstacle_sprites,create_attack,destroy_weapon):
+	def __init__(self,pos,groups,obstacle_sprites,create_attack,destroy_weapon,create_ultimate,destroy_ultimate):
 		super().__init__(groups)
 		
 		img1 = pg.image.load('player/right/right0.png')
@@ -19,7 +19,6 @@ class Player(pg.sprite.Sprite):
 		self.animation_speed = 0.15
 
 		self.direction = pg.math.Vector2()
-		self.speed = 5
 		self.attacking = False
 		self.attack_cooldown = 200
 		self.attack_time = None
@@ -32,6 +31,25 @@ class Player(pg.sprite.Sprite):
 
 		self.obstacle_sprites = obstacle_sprites
 		
+		#ultimate
+		self.create_ultimate = create_ultimate
+		self.destroy_ultimate = destroy_ultimate
+		self.ultimate_index = 0
+		self.ultimate = list(ultimate_data.keys())[self.ultimate_index]
+
+
+		#Stats
+		self.stats = {
+			'health': 100,
+			'energy': 60,
+			'attack': 10,
+			'speed': 5
+		}
+		self.health = self.stats['health']
+		self.energy = self.stats['energy']
+		self.money = 0
+		self.ultimate_pt = 0
+		self.speed = self.stats['speed']
 	#PlayerTexture
 	def import_player_assets(self):
 		character_path = 'player/'
@@ -76,6 +94,10 @@ class Player(pg.sprite.Sprite):
 			if keys[pg.K_q]:
 				self.attacking = True
 				self.attack_time = pg.time.get_ticks()
+				style = list(ultimate_data.keys())[self.ultimate_index]
+				strength = list(ultimate_data.values())[self.ultimate_index]['strength'] + self.stats['attack']
+				self.create_ultimate(style,strength)
+
 
 			#Interaction
 			if keys[pg.K_e]:
@@ -143,6 +165,7 @@ class Player(pg.sprite.Sprite):
 			if current_time - self.attack_time >= self.attack_cooldown:
 				self.attacking = False
 				self.destroy_weapon()
+				self.destroy_ultimate()
 
 	def update(self):
 		self.input()

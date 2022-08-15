@@ -46,6 +46,10 @@
     <Compile Include="tile.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ui.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ultimate.py" />
     <Compile Include="weapon.py">
       <SubType>Code</SubType>
     </Compile>

@@ -4,6 +4,8 @@ from tile import Tile
 from player import Player
 from support import *
 from weapon import *
+from ui import *
+from ultimate import *
 
 class Level:
 	def __init__(self):
@@ -17,19 +19,19 @@ class Level:
 
 		#attack sprites
 		self.current_attack = None
-
+		self.current_ultimate = None
+		
 		# sprite setup
 		self.create_map()
+
+		#UI
+		self.ui = UI()
 
 	def create_map(self):
 		layouts = {
 			'boundary': import_csv_layout('map\level0\level_0_edit_blocked.csv'),
 			'deco': import_csv_layout('map\level0\level_0_edit_decoration.csv')
 			}
-		#graphics = {
-		#	'deco': import_folder('map\Maintexture\deco')
-		#	}
-
 		#Game Map & Object
 		for style,layout in layouts.items():
 			for row_index,row in enumerate(layout):
@@ -70,20 +72,25 @@ class Level:
 								Tile((x,y),[self.visible_sprites],'deco',pg.image.load('map/Maintexture/deco/485.png'))	
 		
 		#Player Spawn						
-		self.player = Player((450,400),[self.visible_sprites],self.obstacle_sprites,self.create_attack,self.destroy_weapon)
+		self.player = Player((450,400),[self.visible_sprites],self.obstacle_sprites,self.create_attack,self.destroy_weapon,self.create_ultimate,self.destroy_ultimate)
 	
 	def create_attack(self):
 		self.current_attack = Weapon(self.player,[self.visible_sprites])
-	
+	def create_ultimate(self,style,strength):
+		self.current_ultimate = Ultimate(self.player,[self.visible_sprites])
 	def destroy_weapon(self):
 		if self.current_attack:
 			self.current_attack.kill()
 		self.current_attack = None
-	
+	def destroy_ultimate(self):
+		if self.current_ultimate:
+			self.current_ultimate.kill()
+		self.current_ultimate = None
 	def run(self):
 		# update and draw the game
 		self.visible_sprites.custom_draw(self.player)
 		self.visible_sprites.update()
+		self.ui.display(self.player)
 
 #Camera
 class YSortCameraGroup(pg.sprite.Group):
