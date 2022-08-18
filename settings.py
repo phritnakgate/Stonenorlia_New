@@ -1,3 +1,4 @@
+import random as rd
 #game setup
 WIDTH = 960
 HEIGHT = 720
@@ -23,7 +24,9 @@ UI_BORDER_COLOR_ACTIVE = 'gold'
 
 #weapons
 weapon_data = {
-    'sword_lv0' : {'cooldown': 100,'damage' : 10,'graphic' : 'weapon/sword_lv0/full.png'}
+    'sword_lv0' : {'cooldown': 100,
+                   'damage' : 10,
+                   'graphic' : 'weapon/sword_lv0/full.png'}
     }
 
 #ultimate
@@ -32,4 +35,14 @@ ultimate_data = {
         'strength': 5,
         'graphic':'weapon/ultimate/ultimate.gif'
         }
+    }
+#enemy
+monster_data = {
+    'zombie' : {'health': 100, 
+                'reward': rd.randint(1,5), 
+                'attack_sound':'',
+                'speed':3,
+                'resistance': 3,
+                'attack_radius': 80,
+                'notice_raius': 360}
     }

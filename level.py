@@ -30,7 +30,8 @@ class Level:
 	def create_map(self):
 		layouts = {
 			'boundary': import_csv_layout('map\level0\level_0_edit_blocked.csv'),
-			'deco': import_csv_layout('map\level0\level_0_edit_decoration.csv')
+			'deco': import_csv_layout('map\level0\level_0_edit_decoration.csv'),
+			'seller': import_csv_layout('map\level0\level_0_edit_entity.csv')
 			}
 		#Game Map & Object
 		for style,layout in layouts.items():
@@ -70,7 +71,9 @@ class Level:
 								Tile((x,y),[self.visible_sprites],'deco',pg.image.load('map/Maintexture/deco/484.png'))	
 							elif col == '485':
 								Tile((x,y),[self.visible_sprites],'deco',pg.image.load('map/Maintexture/deco/485.png'))	
-		
+						#if style == 'seller':
+							#if col == '0':
+								#Seller((x,y),[self.visible_sprites],'seller2')
 		#Player Spawn						
 		self.player = Player((450,400),[self.visible_sprites],self.obstacle_sprites,self.create_attack,self.destroy_weapon,self.create_ultimate,self.destroy_ultimate)
 	

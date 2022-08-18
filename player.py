@@ -1,9 +1,10 @@
 import pygame as pg
 from settings import *
 from support import *
+from entity import *
+from seller import *
 
-
-class Player(pg.sprite.Sprite):
+class Player(Entity):
 	def __init__(self,pos,groups,obstacle_sprites,create_attack,destroy_weapon,create_ultimate,destroy_ultimate):
 		super().__init__(groups)
 		
@@ -15,10 +16,7 @@ class Player(pg.sprite.Sprite):
 
 		self.import_player_assets()
 		self.status = 'right'
-		self.frame_index = 0
-		self.animation_speed = 0.15
-
-		self.direction = pg.math.Vector2()
+		
 		self.attacking = False
 		self.attack_cooldown = 200
 		self.attack_time = None
@@ -103,16 +101,6 @@ class Player(pg.sprite.Sprite):
 			if keys[pg.K_e]:
 				pass
 
-	def move(self,speed):
-		if self.direction.magnitude() != 0:
-			self.direction = self.direction.normalize()
-
-		self.hitbox.x += self.direction.x * speed
-		self.collision('horizontal')
-		self.hitbox.y += self.direction.y * speed
-		self.collision('vertical')
-		self.rect.center = self.hitbox.center
-
 	def get_status(self):
 		
 		#idle
@@ -131,24 +119,7 @@ class Player(pg.sprite.Sprite):
 		else:
 			if 'attack' in self.status:
 				self.status = self.status.replace('_attack','')
-	#Collision
-	def collision(self,direction):
-		if direction == 'horizontal':
-			for sprite in self.obstacle_sprites:
-				if sprite.hitbox.colliderect(self.hitbox):
-					if self.direction.x > 0: # moving right
-						self.hitbox.right = sprite.hitbox.left
-					if self.direction.x < 0: # moving left
-						self.hitbox.left = sprite.hitbox.right
 
-		if direction == 'vertical':
-			for sprite in self.obstacle_sprites:
-				if sprite.hitbox.colliderect(self.hitbox):
-					if self.direction.y > 0: # moving down
-						self.hitbox.bottom = sprite.hitbox.top
-					if self.direction.y < 0: # moving up
-						self.hitbox.top = sprite.hitbox.bottom
-	
 	def animate(self):
 		animation = self.animations[self.status]
 

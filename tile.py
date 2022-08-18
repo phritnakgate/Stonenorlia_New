@@ -1,3 +1,4 @@
+#Organize type of sprites
 import pygame as pg
 from settings import *
 

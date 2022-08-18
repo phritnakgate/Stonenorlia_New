@@ -24,6 +24,10 @@
     <Compile Include="debug.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="enemy.py" />
+    <Compile Include="entity.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="game_data.py">
       <SubType>Code</SubType>
     </Compile>

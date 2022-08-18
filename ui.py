@@ -62,11 +62,21 @@ class UI:
         self.display_surface.blit(text_surf,text_rect)
         pg.draw.rect(self.display_surface,UI_BORDER_COLOR,text_rect.inflate(20,20),3)
     
+    def show_creatorname(self):
+        text_surf = self.font.render('65010604_PHRIT NAKGATE',False,TEXT_COLOR)
+        x = self.display_surface.get_size()[0] - 250
+        y = self.display_surface.get_size()[1] - 700
+        text_rect = text_surf.get_rect(topleft = (x,y))
+        
+        pg.draw.rect(self.display_surface,UI_BG_COLOR,text_rect.inflate(20,20))
+        self.display_surface.blit(text_surf,text_rect)
+        pg.draw.rect(self.display_surface,UI_BORDER_COLOR,text_rect.inflate(20,20),3)
+
     def display(self,player):
         self.show_bar(player.health,player.stats['health'],self.health_bar_rect,HEALTH_COLOR)
         self.show_bar(player.energy,player.stats['energy'],self.energy_bar_rect,ENERGY_COLOR)
-
+        self.show_creatorname()         #myname
         self.show_money(player.money)   #money
-        self.show_ult(player.ultimate_pt)
+        self.show_ult(player.ultimate_pt)   #ultimatepoint
         
         self.weapon_overlay(player.weapon_index)
