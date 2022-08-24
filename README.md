@@ -21,3 +21,4 @@
 - [0x72_DungeonTileset II_v1.4](https://0x72.itch.io/dungeontileset-ii)
 - [Pixel Art Top Down - Basic](https://cainos.itch.io/pixel-art-top-down-basic)
 - [Serene Village - revamped - RPG Tileset](https://limezu.itch.io/serenevillagerevamped)
+- [Monster & Giant Asset Pack](https://deepdivegamestudio.itch.io/monstergiantassetpack)

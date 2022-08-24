@@ -2,6 +2,7 @@ import pygame as pg
 from settings import *
 from tile import Tile
 from player import Player
+from seller import Seller
 from support import *
 from weapon import *
 from ui import *
@@ -16,6 +17,7 @@ class Level:
 		# sprite group setup
 		self.visible_sprites = YSortCameraGroup()
 		self.obstacle_sprites = pg.sprite.Group()
+		self.all_sprites = pg.sprite.Group()
 
 		#attack sprites
 		self.current_attack = None
@@ -26,12 +28,13 @@ class Level:
 
 		#UI
 		self.ui = UI()
-
 	def create_map(self):
 		layouts = {
 			'boundary': import_csv_layout('map\level0\level_0_edit_blocked.csv'),
 			'deco': import_csv_layout('map\level0\level_0_edit_decoration.csv'),
-			'seller': import_csv_layout('map\level0\level_0_edit_entity.csv')
+			'merchant': import_csv_layout('map\level0\level_0_edit_entity.csv'),
+			'seller1_hitbox': import_csv_layout('map\level0\level_0_edit_seller1area.csv'),
+			'seller2_hitbox': import_csv_layout('map\level0\level_0_edit_seller2area.csv')
 			}
 		#Game Map & Object
 		for style,layout in layouts.items():
@@ -71,12 +74,15 @@ class Level:
 								Tile((x,y),[self.visible_sprites],'deco',pg.image.load('map/Maintexture/deco/484.png'))	
 							elif col == '485':
 								Tile((x,y),[self.visible_sprites],'deco',pg.image.load('map/Maintexture/deco/485.png'))	
-						#if style == 'seller':
-							#if col == '0':
-								#Seller((x,y),[self.visible_sprites],'seller2')
+						if style == 'merchant':
+							Seller((x,y),[self.visible_sprites],'merchant',pg.image.load('seller/seller2/idle/0.png'))
+						if style == 'seller1_hitbox':
+							Tile((x,y),[self.all_sprites],'invisible')
+						if style == 'seller2_hitbox':
+							Tile((x,y),[self.visible_sprites],'invisible')
 		#Player Spawn						
-		self.player = Player((450,400),[self.visible_sprites],self.obstacle_sprites,self.create_attack,self.destroy_weapon,self.create_ultimate,self.destroy_ultimate)
-	
+		self.player = Player((450,400),[self.visible_sprites],self.obstacle_sprites,self.create_attack,self.destroy_weapon,self.create_ultimate,self.destroy_ultimate,self.toggle_shop)
+		
 	def create_attack(self):
 		self.current_attack = Weapon(self.player,[self.visible_sprites])
 	def create_ultimate(self,style,strength):
@@ -89,6 +95,8 @@ class Level:
 		if self.current_ultimate:
 			self.current_ultimate.kill()
 		self.current_ultimate = None
+	def toggle_shop(self):
+		pass
 	def run(self):
 		# update and draw the game
 		self.visible_sprites.custom_draw(self.player)

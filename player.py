@@ -3,9 +3,10 @@ from settings import *
 from support import *
 from entity import *
 from seller import *
+from level import *
 
 class Player(Entity):
-	def __init__(self,pos,groups,obstacle_sprites,create_attack,destroy_weapon,create_ultimate,destroy_ultimate):
+	def __init__(self,pos,groups,obstacle_sprites,all_sprites,create_attack,destroy_weapon,create_ultimate,destroy_ultimate,toggle_shop):
 		super().__init__(groups)
 		
 		img1 = pg.image.load('player/right/right0.png')
@@ -28,6 +29,7 @@ class Player(Entity):
 		self.weapon = list(weapon_data.keys())[self.weapon_index]
 
 		self.obstacle_sprites = obstacle_sprites
+		self.all_sprites = all_sprites
 		
 		#ultimate
 		self.create_ultimate = create_ultimate
@@ -35,11 +37,10 @@ class Player(Entity):
 		self.ultimate_index = 0
 		self.ultimate = list(ultimate_data.keys())[self.ultimate_index]
 
-
 		#Stats
 		self.stats = {
 			'health': 100,
-			'energy': 60,
+			'energy': 120,
 			'attack': 10,
 			'speed': 5
 		}
@@ -47,7 +48,11 @@ class Player(Entity):
 		self.energy = self.stats['energy']
 		self.money = 0
 		self.ultimate_pt = 0
+		self.user_rank = 0
 		self.speed = self.stats['speed']
+
+		#Shop
+		self.toggle_shop = toggle_shop
 	#PlayerTexture
 	def import_player_assets(self):
 		character_path = 'player/'
@@ -119,6 +124,7 @@ class Player(Entity):
 		else:
 			if 'attack' in self.status:
 				self.status = self.status.replace('_attack','')
+				
 
 	def animate(self):
 		animation = self.animations[self.status]
