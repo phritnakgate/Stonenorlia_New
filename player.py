@@ -5,8 +5,9 @@ from entity import *
 from seller import *
 from level import *
 
+
 class Player(Entity):
-	def __init__(self,pos,groups,obstacle_sprites,all_sprites,create_attack,destroy_weapon,create_ultimate,destroy_ultimate,toggle_shop):
+	def __init__(self,pos,groups,obstacle_sprites,all_sprites,create_attack,destroy_weapon,create_ultimate,destroy_ultimate):
 		super().__init__(groups)
 		
 		img1 = pg.image.load('player/right/right0.png')
@@ -52,7 +53,10 @@ class Player(Entity):
 		self.speed = self.stats['speed']
 
 		#Shop
-		self.toggle_shop = toggle_shop
+		#self.toggle_shop = toggle_shop
+
+		self.current_level = 0
+		
 	#PlayerTexture
 	def import_player_assets(self):
 		character_path = 'player/'
@@ -105,6 +109,14 @@ class Player(Entity):
 			#Interaction
 			if keys[pg.K_e]:
 				pass
+
+			if keys[pg.K_b]:
+				if self.current_level == 0:
+					self.current_level += 1
+					pg.time.wait(500)
+				else:
+					self.current_level -= 1
+					pg.time.wait(500)
 
 	def get_status(self):
 		

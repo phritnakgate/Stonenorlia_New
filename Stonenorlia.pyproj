@@ -34,6 +34,7 @@
     <Compile Include="level.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="level1.py" />
     <Compile Include="main.py" />
     <Compile Include="player.py">
       <SubType>Code</SubType>

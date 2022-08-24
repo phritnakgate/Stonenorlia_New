@@ -28,6 +28,7 @@ class Level:
 
 		#UI
 		self.ui = UI()
+
 	def create_map(self):
 		layouts = {
 			'boundary': import_csv_layout('map\level0\level_0_edit_blocked.csv'),
@@ -81,7 +82,7 @@ class Level:
 						if style == 'seller2_hitbox':
 							Tile((x,y),[self.visible_sprites],'invisible')
 		#Player Spawn						
-		self.player = Player((450,400),[self.visible_sprites],self.obstacle_sprites,self.create_attack,self.destroy_weapon,self.create_ultimate,self.destroy_ultimate,self.toggle_shop)
+		self.player = Player((450,400),[self.visible_sprites],self.obstacle_sprites,self.all_sprites,self.create_attack,self.destroy_weapon,self.create_ultimate,self.destroy_ultimate)
 		
 	def create_attack(self):
 		self.current_attack = Weapon(self.player,[self.visible_sprites])
@@ -97,6 +98,9 @@ class Level:
 		self.current_ultimate = None
 	def toggle_shop(self):
 		pass
+	def change_level(self):
+		Level.kill()
+		Level1.run()
 	def run(self):
 		# update and draw the game
 		self.visible_sprites.custom_draw(self.player)

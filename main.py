@@ -1,7 +1,8 @@
 import pygame as pg
 import sys
 from settings import *
-from level import Level  
+from level import Level
+from level1 import Level1
 
 class Game:
     def __init__(self):
@@ -10,7 +11,7 @@ class Game:
         self.window = pg.display.set_mode((WIDTH,HEIGHT))
         self.clock = pg.time.Clock()    #FPS
         self.level = Level()
-        
+        self.level1 = Level1()
 
         # Window Config
         pg.display.set_caption("Stonenorlia")
@@ -25,8 +26,7 @@ class Game:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     pg.quit()
-                    sys.exit()
-                
+                    sys.exit() 
             self.window.fill('black')
             self.level.run()    #Open game level
             pg.display.update()
