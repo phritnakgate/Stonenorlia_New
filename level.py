@@ -99,8 +99,7 @@ class Level:
 	def toggle_shop(self):
 		pass
 	def change_level(self):
-		Level.kill()
-		Level1.run()
+		pass
 	def run(self):
 		# update and draw the game
 		self.visible_sprites.custom_draw(self.player)

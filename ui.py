@@ -71,6 +71,15 @@ class UI:
         pg.draw.rect(self.display_surface,UI_BG_COLOR,text_rect.inflate(20,20))
         self.display_surface.blit(text_surf,text_rect)
         pg.draw.rect(self.display_surface,UI_BORDER_COLOR,text_rect.inflate(20,20),3)
+    def show_userrank(self,user_rank):
+        text_surf = self.font.render(str(int(user_rank)),False,TEXT_COLOR)
+        x = self.display_surface.get_size()[0] - 50
+        y = self.display_surface.get_size()[1] - 625
+        text_rect = text_surf.get_rect(bottomright = (x,y))
+        
+        pg.draw.rect(self.display_surface,UI_BG_COLOR,text_rect.inflate(20,20))
+        self.display_surface.blit(text_surf,text_rect)
+        pg.draw.rect(self.display_surface,UI_BORDER_COLOR,text_rect.inflate(20,20),3)
 
     def display(self,player):
         self.show_bar(player.health,player.stats['health'],self.health_bar_rect,HEALTH_COLOR)
@@ -78,5 +87,5 @@ class UI:
         self.show_creatorname()         #myname
         self.show_money(player.money)   #money
         self.show_ult(player.ultimate_pt)   #ultimatepoint
-        
+        self.show_userrank(player.user_rank) 
         self.weapon_overlay(player.weapon_index)

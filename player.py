@@ -110,13 +110,7 @@ class Player(Entity):
 			if keys[pg.K_e]:
 				pass
 
-			if keys[pg.K_b]:
-				if self.current_level == 0:
-					self.current_level += 1
-					pg.time.wait(500)
-				else:
-					self.current_level -= 1
-					pg.time.wait(500)
+			
 
 	def get_status(self):
 		
