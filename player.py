@@ -9,10 +9,11 @@ from level import *
 class Player(Entity):
 	def __init__(self,pos,groups,obstacle_sprites,all_sprites,create_attack,destroy_weapon,create_ultimate,destroy_ultimate):
 		super().__init__(groups)
-		
-		img1 = pg.image.load('player/right/right0.png')
+		self.sprite_type = 'attack_sprite'
+		img1 = pg.image.load('player/right_idle/idle_right0.png')
 		img2 = pg.transform.scale(img1,(64,64))
 		self.image = img2.convert_alpha()
+		
 		self.rect = self.image.get_rect(topleft = pos)
 		self.hitbox = self.rect.inflate(0,-26)
 
@@ -51,6 +52,10 @@ class Player(Entity):
 		self.ultimate_pt = 0
 		self.user_rank = 0
 		self.speed = self.stats['speed']
+
+		self.vulnerable = True
+		self.hurt_time = None
+		self.invulnerbility_duration = 500
 
 		#Shop
 		#self.toggle_shop = toggle_shop
@@ -145,11 +150,18 @@ class Player(Entity):
 	def cooldowns(self):
 		current_time = pg.time.get_ticks()
 		if self.attacking:
-			if current_time - self.attack_time >= self.attack_cooldown:
+			if current_time - self.attack_time >= self.attack_cooldown + weapon_data[self.weapon]['cooldown']:
 				self.attacking = False
 				self.destroy_weapon()
 				self.destroy_ultimate()
-
+		if not self.vulnerable:
+			if current_time - self.hurt_time >= self.invulnerbility_duration:
+				self.vulnerable = True
+	
+	def get_full_weapon_damage(self):
+		weapon_damage = weapon_data[self.weapon]['damage']
+		return weapon_damage
+	
 	def update(self):
 		self.input()
 		self.cooldowns()

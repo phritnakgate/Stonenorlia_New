@@ -39,15 +39,17 @@ ultimate_data = {
 #enemy
 monster_data = {
     #Dungeon1_Monster
-    'Ochre_Jelly' : {'health': 50,
+    #Minor1
+    'Ochre Jelly' : {'health': 50,
                 'damage': 5,
                 'reward': rd.randint(1,5), 
                 'urank_reward': 1,
                 'attack_sound':'',
                 'speed':3,
                 'resistance': 3,
-                'attack_radius': 80,
+                'attack_radius': 32,
                 'notice_raius': 360},
+    #Minor2
     'Death Slime':{'health': 100, 
                 'damage': 7,
                 'reward': rd.randint(2,5), 
@@ -55,8 +57,9 @@ monster_data = {
                 'attack_sound':'',
                 'speed':3,
                 'resistance': 3,
-                'attack_radius': 80,
+                'attack_radius': 32,
                 'notice_raius': 360},
+    #Boss
     'Acid Ooze'  :{'health': 150, 
                 'damage': 10,
                 'reward': 10, 
@@ -64,6 +67,6 @@ monster_data = {
                 'attack_sound':'',
                 'speed':3,
                 'resistance': 5,
-                'attack_radius': 120,
+                'attack_radius': 60,
                 'notice_raius': 360}
         }  

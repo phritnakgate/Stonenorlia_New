@@ -71,5 +71,3 @@ while True:
         game_state.lv1()
         pg.display.update()
         clock.tick(FPS)
-    
-    

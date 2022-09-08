@@ -18,6 +18,7 @@ class Level:
 		self.visible_sprites = YSortCameraGroup()
 		self.obstacle_sprites = pg.sprite.Group()
 		self.all_sprites = pg.sprite.Group()
+		
 
 		#attack sprites
 		self.current_attack = None

@@ -15,6 +15,8 @@ class Level1:
 		self.visible_sprites = YSortCameraGroup()
 		self.obstacle_sprites = pg.sprite.Group()
 		self.all_sprites = pg.sprite.Group()
+		self.attack_sprite = pg.sprite.Group()
+		self.attackable_sprites = pg.sprite.Group()
 
 		self.current_attack = None
 		self.current_ultimate = None
@@ -36,13 +38,19 @@ class Level1:
 						if style == 'boundary':
 							Tile((x,y),[self.obstacle_sprites],'invisible')
 						if style == 'enemy':
-							pass
-		self.player = Player((64,3072),[self.visible_sprites],self.obstacle_sprites,self.all_sprites,self.create_attack,self.destroy_weapon,self.create_ultimate,self.destroy_ultimate)
+							if col == '0':
+								Enemy('Ochre Jelly',(x,y),[self.visible_sprites,self.attackable_sprites],self.obstacle_sprites,self.damage_player)
+							elif col == '1':
+								Enemy('Death Slime',(x,y),[self.visible_sprites,self.attackable_sprites],self.obstacle_sprites,self.damage_player)
+							elif col == '2':
+								Enemy('Acid Ooze',(x,y),[self.visible_sprites,self.attackable_sprites],self.obstacle_sprites,self.damage_player)
+		self.player = Player((64,3072),[self.visible_sprites,self.attack_sprite],self.obstacle_sprites,self.all_sprites,self.create_attack,self.destroy_weapon,self.create_ultimate,self.destroy_ultimate)
 
 	def create_attack(self):
 		self.current_attack = Weapon(self.player,[self.visible_sprites])
 	def create_ultimate(self,style,strength):
 		self.current_ultimate = Ultimate(self.player,[self.visible_sprites])
+	
 	def destroy_weapon(self):
 		if self.current_attack:
 			self.current_attack.kill()
@@ -51,6 +59,19 @@ class Level1:
 		if self.current_ultimate:
 			self.current_ultimate.kill()
 		self.current_ultimate = None
+	
+	def player_attack_logic(self):
+		if self.attack_sprite:
+			for attack_sprite in self.attack_sprite:
+				collision_sprites = pg.sprite.spritecollide(attack_sprite,self.attackable_sprites,False)
+				if collision_sprites:
+					for target_sprite in collision_sprites:
+						target_sprite.get_damage(self.player,attack_sprite.sprite_type)
+	def damage_player(self,amount):
+		if self.player.vulnerable:
+			self.player.health -= amount
+			self.player.vulnerable = False
+			self.player.hurt_time = pg.time.get_ticks()
 	def toggle_shop(self):
 		pass
 	
@@ -58,6 +79,8 @@ class Level1:
 		# update and draw the game
 		self.visible_sprites.custom_draw(self.player)
 		self.visible_sprites.update()
+		self.visible_sprites.enemy_update(self.player)
+		self.player_attack_logic()
 		self.ui.display(self.player)
 
 #Camera
@@ -72,7 +95,7 @@ class YSortCameraGroup(pg.sprite.Group):
 		self.offset = pg.math.Vector2()
 
 		#create floor
-		self.floor_surface = pg.image.load('map/Maintexture/level_1_terrain.png').convert()
+		self.floor_surface = pg.image.load('map/Maintexture/level_1_terrain.png').convert_alpha()
 		self.floor_rect = self.floor_surface.get_rect(topleft = (0,0))
 
 	def custom_draw(self,player):
@@ -89,6 +112,8 @@ class YSortCameraGroup(pg.sprite.Group):
 		for sprite in sorted(self.sprites(),key = lambda sprite: sprite.rect.centery):
 			offset_pos = sprite.rect.topleft - self.offset
 			self.display_surface.blit(sprite.image,offset_pos)
-
-
-
+	
+	def enemy_update(self,player):
+		enemy_sprites = [sprite for sprite in self.sprites() if hasattr(sprite,'sprite_type') and sprite.sprite_type == 'enemy']
+		for enemy in enemy_sprites:
+			enemy.enemy_update(player)
