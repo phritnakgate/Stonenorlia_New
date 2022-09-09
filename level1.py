@@ -44,7 +44,7 @@ class Level1:
 								Enemy('Death Slime',(x,y),[self.visible_sprites,self.attackable_sprites],self.obstacle_sprites,self.damage_player)
 							elif col == '2':
 								Enemy('Acid Ooze',(x,y),[self.visible_sprites,self.attackable_sprites],self.obstacle_sprites,self.damage_player)
-		self.player = Player((64,3072),[self.visible_sprites,self.attack_sprite],self.obstacle_sprites,self.all_sprites,self.create_attack,self.destroy_weapon,self.create_ultimate,self.destroy_ultimate)
+		self.player = Player((64,1440),[self.visible_sprites,self.attack_sprite],self.obstacle_sprites,self.all_sprites,self.create_attack,self.destroy_weapon,self.create_ultimate,self.destroy_ultimate)
 
 	def create_attack(self):
 		self.current_attack = Weapon(self.player,[self.visible_sprites])
